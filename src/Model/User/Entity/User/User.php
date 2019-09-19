@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nail
- * Date: 18.09.19
- * Time: 8:46
- */
 
 namespace App\Model\User\Entity\User;
 
@@ -38,6 +32,15 @@ class User
         $this->passwordHash = $passwordHash;
         $this->confirmToken = $token;
         $this->status = self::STATUS_WAIT;
+    }
+
+    public function confirmSignUp(): void
+    {
+        if (!$this->isWait()) {
+            throw new \DomainException('User is already confirmed.');
+        }
+        $this->status = self::STATUS_ACTIVE;
+        $this->confirmToken = null;
     }
 
     public function getId() : Id
