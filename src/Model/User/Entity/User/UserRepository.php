@@ -10,6 +10,11 @@ class UserRepository
 
     }
 
+    public function getByEmail(Email $email): User
+    {
+
+    }
+
     public function hasByEmail(Email $email): bool
     {
 

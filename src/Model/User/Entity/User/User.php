@@ -22,6 +22,11 @@ class User
 
     private $status;
 
+    /**
+     * @var ResetToken|null
+     */
+    private $resetToken;
+
     private $confirmToken;
 
     public function __construct(Id $id, \DateTimeImmutable $date, Email $email, string $passwordHash, string $token)
@@ -41,6 +46,19 @@ class User
         }
         $this->status = self::STATUS_ACTIVE;
         $this->confirmToken = null;
+    }
+
+    public function requestPasswordReset(ResetToken $token, \DateTimeImmutable $date): void
+    {
+        if (!$this->email) {
+            throw \DomainException('Email is not specified.');
+        }
+
+        if ($this->resetToken && !$this->resetToken->isExpired($date)) {
+            throw new \DomainException('Resetting is already requested.');
+        }
+
+        $this->resetToken = $token;
     }
 
     public function getId() : Id
@@ -71,6 +89,11 @@ class User
     public function getPasswordHash(): string
     {
         return $this->passwordHash;
+    }
+
+    public function getResetToken(): ?ResetToken
+    {
+        return $this->resetToken;
     }
 
     public function getConfirmToken(): string
