@@ -9,7 +9,10 @@ class UserRepository
     {
 
     }
+    public function findByResetToken(string $token): ?User
+    {
 
+    }
     public function getByEmail(Email $email): User
     {
 

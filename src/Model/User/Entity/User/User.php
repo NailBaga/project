@@ -60,6 +60,18 @@ class User
 
         $this->resetToken = $token;
     }
+    public function passwordReset(\DateTimeImmutable $date, string $hash): void
+    {
+        if (!$this->resetToken) {
+            throw new \DomainException('Resetting is not requested.');
+        }
+
+        if ($this->resetToken->isExpired($date)) {
+            throw new \DomainException('Reset token is Expired');
+        }
+        $this->passwordHash = $hash;
+        $this->resetToken = null;
+    }
 
     public function getId() : Id
     {
