@@ -17,6 +17,7 @@ class RequestTest extends TestCase
         $token = new ResetToken('token', $now->modify('+1 day'));
 
         $user = $this->buildSignedUpByEmailUser();
+        $user->confirmSignUp();
 
         $user->requestPasswordReset($token, $now);
 
@@ -29,6 +30,7 @@ class RequestTest extends TestCase
         $token = new ResetToken('token', $now->modify('+1 day'));
 
         $user = $this->buildSignedUpByEmailUser();
+        $user->confirmSignUp();
 
         $user->requestPasswordReset($token, $now);
 
@@ -39,6 +41,7 @@ class RequestTest extends TestCase
     public function testExpired(): void
     {
         $user = $this->buildSignedUpByEmailUser();
+        $user->confirmSignUp();
 
         $now = new \DateTimeImmutable();
         $token1 = new ResetToken('token', $now->modify('+1 day'));
@@ -49,6 +52,17 @@ class RequestTest extends TestCase
 
         $user->requestPasswordReset($token2, $now->modify('+1 day'));
         self::assertEquals($token2, $user->getResetToken());
+    }
+
+    public function testNotConfirmed(): void
+    {
+        $now = new \DateTimeImmutable();
+        $token = new ResetToken('token', $now->modify('+1 day'));
+
+        $user = $this->buildSignedUpByEmailUser();
+
+        $this->expectExceptionMessage('User is not active.');
+        $user->requestPasswordReset($token, $now);
     }
 
     private function buildSignedUpByEmailUser(): User

@@ -63,6 +63,7 @@ class ResetTest extends TestCase
             $hash = 'hash',
             $token = 'token'
         );
+        $user->confirmSignUp();
 
         return $user;
     }
