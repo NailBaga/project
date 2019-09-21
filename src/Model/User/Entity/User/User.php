@@ -2,31 +2,62 @@
 
 namespace App\Model\User\Entity\User;
 
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
+ * @ORM\Table(name="user_users", uniqueConstraints={
+ *     @ORM\UniqueConstraint(columns={"email"}),
+ *     @ORM\UniqueConstraint(columns={"reset_token_token"})
+ * })
+ */
 class User
 {
 
     private const STATUS_WAIT = 'wait';
     private const STATUS_ACTIVE = 'active';
 
+    /**
+     * @ORM\Column(type="user_user_id")
+     * @ORM\Id
+     */
     private $id;
 
     /**
      * @var \DateTimeImmutable
+     * @ORM\Column(type="datetime_immutable")
      */
     private $date;
 
+    /**
+     * @var Email|null
+     * @ORM\Column(type="user_user_email", nullable=true)
+     */
     private $email;
 
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", name="password_hash", nullable=true)
+     */
     private $passwordHash;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=16)
+     */
     private $status;
 
     /**
      * @var ResetToken|null
+     * @ORM\Embedded(class="ResetToken", columnPrefix="reset_token_")
      */
     private $resetToken;
 
+    /**
+     * @var string|null
+     * @ORM\Column(type="string", name="confirm_token", nullable=true)
+     */
     private $confirmToken;
 
     public function __construct(Id $id, \DateTimeImmutable $date, Email $email, string $passwordHash, string $token)
