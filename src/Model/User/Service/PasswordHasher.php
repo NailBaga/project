@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\User\UseCase;
+namespace App\Model\User\Service;
 
 class PasswordHasher
 {
