@@ -23,12 +23,12 @@ class UserRepository
 
     public function findByConfirmToken(string $token): ?User
     {
-        $this->repo->findOneBy(['confirmToken' => $token]);
+        return $this->repo->findOneBy(['confirmToken' => $token]);
     }
 
     public function findByResetToken(string $token): ?User
     {
-        $this->repo->findOneBy(['resetToken.token' => $token]);
+        return $this->repo->findOneBy(['resetToken.token' => $token]);
     }
 
     public function get(Id $id): User
