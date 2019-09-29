@@ -8,6 +8,6 @@ class ConfirmTokenizer
 {
     public function generate(): string
     {
-        return Uiid::uiid4()->toString();
+        return Uuid::uuid4()->toString();
     }
 }

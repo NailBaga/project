@@ -8,9 +8,7 @@
 
 namespace App\Model\User\Entity\User;
 
-
-use http\Exception\InvalidArgumentException;
-use PHPUnit\Framework\Assert;
+use Webmozart\Assert\Assert;
 
 class Email
 {
@@ -18,9 +16,9 @@ class Email
 
    public function __construct(string $value)
    {
-       Assert::assertNotEmpty($value);
+       Assert::notEmpty($value);
        if (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-           throw new InvalidArgumentException('Incorrect Email');
+           throw new \InvalidArgumentException('Incorrect Email');
        }
        $this->value = mb_strtolower($value);
    }

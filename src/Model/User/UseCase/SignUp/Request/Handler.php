@@ -10,7 +10,7 @@ use App\Model\User\Entity\User\User;
 use App\Model\User\Entity\User\UserRepository;
 use App\Model\User\Service\ConfirmTokenizer;
 use App\Model\User\Service\ConfirmTokenSender;
-use App\Model\User\UseCase\PasswordHasher;
+use App\Model\User\Service\PasswordHasher;
 
 class Handler
 {
@@ -41,7 +41,7 @@ class Handler
     {
         $email = new Email($command->email);
 
-        if ($this->users->hasByEmail($email->getValue())) {
+        if ($this->users->hasByEmail($email)) {
             throw new \DomainException('User already exists.');
         }
 
@@ -49,7 +49,7 @@ class Handler
             Id::next(),
             new \DateTimeImmutable(),
             $email,
-            $this->hash->hash($command->password),
+            $this->hasher->hash($command->password),
             $token = $this->tokenizer->generate()
         );
 
@@ -57,6 +57,6 @@ class Handler
 
         $this->sender->send($email, $token);
 
-        $this->fluser->flush();
+        $this->flusher->flush();
     }
 }
