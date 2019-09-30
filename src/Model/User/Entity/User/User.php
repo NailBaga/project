@@ -60,6 +60,12 @@ class User
      */
     private $confirmToken;
 
+    /**
+     * @var Role
+     * @ORM\Column(type="user_user_role", length=16)
+     */
+    private $role;
+
     public function __construct(Id $id, \DateTimeImmutable $date, Email $email, string $passwordHash, string $token)
     {
         $this->id = $id;
@@ -67,6 +73,7 @@ class User
         $this->email = $email;
         $this->passwordHash = $passwordHash;
         $this->confirmToken = $token;
+        $this->role = Role::user();
         $this->status = self::STATUS_WAIT;
     }
 
@@ -108,6 +115,15 @@ class User
         $this->resetToken = null;
     }
 
+    public function changeRole(Role $role)
+    {
+        if ($this->role->isEqual($role)) {
+            throw new \DomainException('Role is already same.');
+        }
+
+        $this->role = $role;
+    }
+
     public function getId() : Id
     {
         return $this->id;
@@ -146,5 +162,10 @@ class User
     public function getConfirmToken(): string
     {
         return $this->confirmToken;
+    }
+
+    public function getRole(): Role
+    {
+        return $this->role;
     }
 }
