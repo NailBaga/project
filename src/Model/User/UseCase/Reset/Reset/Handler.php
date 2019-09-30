@@ -23,7 +23,7 @@ class Handler
     {
         $user = $this->user->findByResetToken($command->token);
         if (!$user) {
-            throw \DomainException('Incorrect Token');
+            throw new \DomainException('Incorrect Token');
         }
 
         $user->passwordReset(

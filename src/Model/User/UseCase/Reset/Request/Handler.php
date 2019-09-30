@@ -12,7 +12,7 @@ use App\Model\User\Service\ResetTokenSender;
 class Handler
 {
     private $users;
-    private $fluser;
+    private $flusher;
     private $resetTokenizer;
     private $sender;
 
@@ -41,7 +41,7 @@ class Handler
             new \DateTimeImmutable()
         );
 
-        $this->fluser->flush();
+        $this->flusher->flush();
 
         $this->sender->send($user->getEmail(), $user->getResetToken());
     }
