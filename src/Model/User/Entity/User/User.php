@@ -37,6 +37,12 @@ class User
     private $email;
 
     /**
+     * @var Name
+     * @ORM\Embedded(class="Name")
+     */
+    private $name;
+
+    /**
      * @var string|null
      * @ORM\Column(type="string", name="password_hash", nullable=true)
      */
@@ -115,6 +121,11 @@ class User
         $this->resetToken = null;
     }
 
+    public function changeName(Name $name): void
+    {
+        $this->name = $name;
+    }
+
     public function changeRole(Role $role)
     {
         if ($this->role->isEqual($role)) {
@@ -142,6 +153,11 @@ class User
     public function getDate(): \DateTimeImmutable
     {
         return $this->date;
+    }
+
+    public function getName(): Name
+    {
+        return $this->name;
     }
 
     public function getEmail(): Email

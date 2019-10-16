@@ -14,6 +14,21 @@ class UserFetcher
         $this->connection = $connection;
     }
 
+    public function findAll()
+    {
+        $stmt = $this->connection->createQueryBuilder()
+            ->select(
+                'id',
+                'email',
+                'name_first as FirstName',
+                'name_last as LastName'
+            )
+            ->from('user_users')
+            ->execute();
+
+        return $stmt->fetchAll(FetchMode::ASSOCIATIVE);
+    }
+
     public function existsByResetToken(string $token): bool
     {
         return $this->connection->createQueryBuilder()

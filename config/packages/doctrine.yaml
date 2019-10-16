@@ -14,6 +14,10 @@ doctrine:
             user_user_id: 'App\Model\User\Entity\User\IdType'
             user_user_email: 'App\Model\User\Entity\User\EmailType'
             user_user_role: 'App\Model\User\Entity\User\RoleType'
+            blog_author_id: 'App\Model\Blog\Entity\Author\IdType'
+            blog_author_status: 'App\Model\Blog\Entity\Author\StatusType'
+            blog_post_id: 'App\Model\Blog\Entity\Post\IdType'
+            blog_post_status: 'App\Model\Blog\Entity\Post\StatusType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
@@ -25,3 +29,9 @@ doctrine:
               dir: '%kernel.project_dir%/src/Model/User/Entity'
               prefix: 'App\Model\User\Entity'
               alias: User
+            Blog:
+              is_bundle: false
+              type: annotation
+              dir: '%kernel.project_dir%/src/Model/Blog/Entity'
+              prefix: 'App\Model\Blog\Entity'
+              alias: Blog

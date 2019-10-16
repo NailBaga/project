@@ -77,4 +77,9 @@ class UserIdentity implements UserInterface, EquatableInterface
             $this->role === $user->role &&
             $this->status === $user->status;
     }
+
+    public function __toString()
+    {
+        return $this->id;
+    }
 }

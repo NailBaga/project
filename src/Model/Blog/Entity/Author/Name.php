@@ -2,13 +2,24 @@
 
 namespace App\Model\Blog\Entity\Author;
 
-
+use Doctrine\ORM\Mapping as ORM;
 use Webmozart\Assert\Assert;
 
+/**
+ * @ORM\Embeddable
+ */
 class Name
 {
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private $first;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string")
+     */
     private $last;
 
     public function __construct(string $first, string $last)

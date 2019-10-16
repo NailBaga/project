@@ -23,4 +23,42 @@ class AuthorTest extends TestCase
         $this->assertEquals($name, $author->getName());
         $this->assertTrue($author->isActive());
     }
+
+    public function testEdit()
+    {
+        $author = new Author(
+            $id = Id::next(),
+            $name = new Name(
+                'first',
+                'last'
+            )
+        );
+
+        $author->edit(
+            $newName = new Name(
+                'first2',
+                'last2'
+            )
+        );
+
+        $this->assertNotEquals($name, $author->getName());
+        $this->assertEquals($newName, $author->getName());
+    }
+
+    public function testArchive()
+    {
+        $author = new Author(
+            $id = Id::next(),
+            $name = new Name(
+                'first',
+                'last'
+            )
+        );
+        $this->assertTrue($author->isActive());
+        $author->archive();
+        $this->assertTrue($author->isArchived());
+
+        $this->expectExceptionMessage('Author is already archived');
+        $author->archive();
+    }
 }

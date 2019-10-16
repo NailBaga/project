@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Model\Blog\Entity\Author;
+namespace App\Model\Blog\Entity\Post;
 
-use Webmozart\Assert\Assert;
+
 use Ramsey\Uuid\Uuid;
+use Webmozart\Assert\Assert;
 
 class Id
 {
-    private $value;
+    private  $value;
 
     public function __construct(string $value)
     {
         Assert::notEmpty($value);
         $this->value = $value;
     }
-
     public static function next(): self
     {
         return new self(Uuid::uuid4()->toString());
@@ -25,8 +25,8 @@ class Id
         return $this->value;
     }
 
-    public function __toString(): string
+    public function __toString():string
     {
-        return $this->getValue();
+        return $this->value;
     }
 }

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authors{% endblock %}
+
+{% block body %}
+
+    <h1>Authors</h1>
+
+    <div class="box">
+
+    {% for author in authors %}
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ author.id }}<a href="{{ path('author_create', {'id': author.id }) }}" class="btn btn-primary">Edit</a></td>
+            </tr>
+            <tr>
+                <th>First name</th>
+                <td>{{ author.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Last name</th>
+                <td>{{ author.lastname }}</td>
+            </tr>
+            </tbody>
+        </table>
+        </div>
+
+    {% endfor %}
+
+{% endblock %}
