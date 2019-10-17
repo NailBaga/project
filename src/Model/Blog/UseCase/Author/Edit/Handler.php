@@ -22,8 +22,8 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $this->repository->get(new Id($command->id));
-        $this->edit(
+        $author = $this->repository->get(new Id($command->id));
+        $author->edit(
             new Name(
                 $command->firstName,
                 $command->lastName)

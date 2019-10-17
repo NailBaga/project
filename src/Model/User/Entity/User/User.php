@@ -2,6 +2,9 @@
 
 namespace App\Model\User\Entity\User;
 
+use App\Model\AggregateRoot;
+use App\Model\EventsTrait;
+use App\Model\User\Entity\User\Event\UserEdited;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -12,8 +15,9 @@ use Doctrine\ORM\Mapping as ORM;
  *     @ORM\UniqueConstraint(columns={"reset_token_token"})
  * })
  */
-class User
+class User implements AggregateRoot
 {
+    use EventsTrait;
 
     public const STATUS_WAIT = 'wait';
     public const STATUS_ACTIVE = 'active';
@@ -123,6 +127,7 @@ class User
 
     public function changeName(Name $name): void
     {
+        $this->recordEvent(new UserEdited($this->getId()->getValue(), $name->getFirst(), $name->getLast()));
         $this->name = $name;
     }
 

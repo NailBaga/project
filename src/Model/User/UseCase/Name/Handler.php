@@ -4,6 +4,7 @@ namespace App\Model\User\UseCase\Name;
 
 use App\Model\Flusher;
 use App\Model\User\Entity\User\Email;
+use App\Model\User\Entity\User\Event\UserEdited;
 use App\Model\User\Entity\User\Name;
 use App\Model\User\Entity\User\Id;
 use App\Model\User\Entity\User\UserRepository;
@@ -21,15 +22,17 @@ class Handler
 
     public function handle(Command $command): void
     {
-        $user = $this->users->get(new Id($command->id));
+        $user = $this->users->get($id = new Id($command->id));
 
         $user->changeName(
-            new Name(
+            $name = new Name(
                 $command->firstName,
                 $command->lastName
             )
         );
 
-        $this->flusher->flush();
+        $this->flusher->flush($user);
     }
+
+
 }
